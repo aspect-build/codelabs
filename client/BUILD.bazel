@@ -1,4 +1,0 @@
-alias(
-    name = "client",
-    actual = "//client/src/bazel/bootcamp:JavaLoggingClient",
-)
