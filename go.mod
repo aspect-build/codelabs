@@ -3,7 +3,7 @@ module github.com/aspect-build/codelabs
 go 1.19
 
 require (
-	google.golang.org/grpc v1.58.2
+	google.golang.org/grpc v1.58.3
 	google.golang.org/protobuf v1.31.0
 )
 
