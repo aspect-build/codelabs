@@ -12,7 +12,7 @@ ts_project(
     declaration = True,
     transpiler = swc,
     deps = [
-        "//schema/logger:logger_ts_proto",
+        "//schema/logger:logger_proto_ts",
     ],
 )
 

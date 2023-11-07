@@ -50,6 +50,10 @@ swift_update_packages(
 
 # gazelle:prefix github.com/aspect-build/codelabs
 
+# gazelle:js_project_naming_convention compile
+# gazelle:exclude **/*_pb.d.ts
+# gazelle:exclude **/*_connect.d.ts
+
 # This target updates the Bazel build files for your project. Run this target
 # whenever you add or remove source files from your project.
 gazelle(

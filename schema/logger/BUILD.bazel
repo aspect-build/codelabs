@@ -25,7 +25,7 @@ go_library(
 )
 
 ts_proto_library(
-    name = "logger_ts_proto",
+    name = "logger_proto_ts",
     node_modules = "//schema:node_modules",
     proto = ":logger_proto",
 )
