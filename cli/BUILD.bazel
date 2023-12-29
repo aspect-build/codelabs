@@ -1,9 +1,20 @@
 load("@rules_python//python:defs.bzl", "py_binary")
 load("@pip//:requirements.bzl", "requirement")
+load("//tools:py_header.bzl", "myorg_py_header")
+
+myorg_py_header(
+    name = "fill_template",
+    out = "header.txt",
+    tmpl = "header.txt.tmpl",
+)
 
 py_binary(
     name = "cli",
     srcs = ["__main__.py"],
     main = "__main__.py",
-    deps = [requirement("requests")],
+    deps = [
+        requirement("requests"),
+        requirement("bazel-runfiles"),
+    ],
+    data = ["header.txt"],
 )

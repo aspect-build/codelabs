@@ -1,1 +1,4 @@
 requests
+Jinja2
+jinja2-cli
+bazel-runfiles

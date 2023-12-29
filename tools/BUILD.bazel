@@ -1,0 +1,21 @@
+load("@rules_python//python/entry_points:py_console_script_binary.bzl", "py_console_script_binary")
+
+package(default_visibility = ["//visibility:public"])
+py_console_script_binary(
+    name = "jinja2",
+    pkg = "@pip//jinja2_cli:pkg",
+)
+
+load("@aspect_bazel_lib//lib:jq.bzl", "jq")
+
+jq(
+    name = "data",
+    srcs = [],
+    filter = "|".join([
+        # Don't directly reference $STAMP as it's only set when stamping
+        # This 'as' syntax results in $stamp being null in unstamped builds.
+        "$ARGS.named.STAMP as $stamp",
+        # Provide a default using the "alternative operator" in case $stamp is null.
+        """.timestamp = ($stamp.BUILD_TIMESTAMP // "<unstamped>")""",
+    ]),
+)
