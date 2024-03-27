@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "plugin_lib",
+    srcs = ["plugin.go"],
+    importpath = "github.com/aspect-build/codelabs/backend/cmd/plugin",
+    visibility = ["//visibility:private"],
+    deps = [
+        "@build_aspect_cli//bazel/buildeventstream",
+        "@build_aspect_cli//bazel/command_line",
+        "@build_aspect_cli//pkg/bazel",
+        "@build_aspect_cli//pkg/ioutils",
+        "@build_aspect_cli//pkg/plugin/sdk/v1alpha3/config",
+        "@build_aspect_cli//pkg/plugin/sdk/v1alpha3/plugin",
+        "@com_github_hashicorp_go_plugin//:go-plugin",
+        "@com_github_manifoldco_promptui//:promptui",
+    ],
+)
+
+go_binary(
+    name = "plugin",
+    embed = [":plugin_lib"],
+    visibility = ["//visibility:public"],
+)
