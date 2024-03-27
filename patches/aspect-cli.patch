@@ -1,0 +1,280 @@
+diff --git a/bazel/action_cache/BUILD.bazel b/bazel/action_cache/BUILD.bazel
+index 5f6c7b7..6b58224 100644
+--- a/bazel/action_cache/BUILD.bazel
++++ b/bazel/action_cache/BUILD.bazel
+@@ -1,7 +1,6 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("//bazel/go:write_go_generated_source_files.bzl", "write_go_generated_source_files")
+ 
+ proto_library(
+     name = "bazel_proto",
+@@ -16,15 +15,6 @@ go_proto_library(
+     visibility = ["//visibility:public"],
+ )
+ 
+-write_go_generated_source_files(
+-    name = "write_pb_go",
+-    src = ":bazel_go_proto",
+-    output_files = [
+-        "action_cache.pb.go",
+-    ],
+-    visibility = ["//bazel:__pkg__"],
+-)
+-
+ go_library(
+     name = "action_cache",
+     embed = [":bazel_go_proto"],
+diff --git a/bazel/analysis/BUILD.bazel b/bazel/analysis/BUILD.bazel
+index 383d4a6..e9d572d 100644
+--- a/bazel/analysis/BUILD.bazel
++++ b/bazel/analysis/BUILD.bazel
+@@ -1,7 +1,6 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("//bazel/go:write_go_generated_source_files.bzl", "write_go_generated_source_files")
+ 
+ proto_library(
+     name = "bazel_proto",
+@@ -18,15 +17,6 @@ go_proto_library(
+     deps = ["//bazel/query"],
+ )
+ 
+-write_go_generated_source_files(
+-    name = "write_pb_go",
+-    src = ":bazel_go_proto",
+-    output_files = [
+-        "analysis_v2.pb.go",
+-    ],
+-    visibility = ["//bazel:__pkg__"],
+-)
+-
+ go_library(
+     name = "analysis",
+     embed = [":bazel_go_proto"],
+diff --git a/bazel/buildeventstream/BUILD.bazel b/bazel/buildeventstream/BUILD.bazel
+index 143cf6e..32454df 100644
+--- a/bazel/buildeventstream/BUILD.bazel
++++ b/bazel/buildeventstream/BUILD.bazel
+@@ -1,7 +1,6 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("//bazel/go:write_go_generated_source_files.bzl", "write_go_generated_source_files")
+ 
+ proto_library(
+     name = "buildeventstream_proto",
+@@ -33,15 +32,6 @@ go_proto_library(
+     ],
+ )
+ 
+-write_go_generated_source_files(
+-    name = "write_pb_go",
+-    src = ":buildeventstream_go_proto",
+-    output_files = [
+-        "build_event_stream.pb.go",
+-    ],
+-    visibility = ["//bazel:__pkg__"],
+-)
+-
+ go_library(
+     name = "buildeventstream",
+     embed = [":buildeventstream_go_proto"],
+diff --git a/bazel/command_line/BUILD.bazel b/bazel/command_line/BUILD.bazel
+index 0f7f8c6..19dc8e8 100644
+--- a/bazel/command_line/BUILD.bazel
++++ b/bazel/command_line/BUILD.bazel
+@@ -1,7 +1,6 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("//bazel/go:write_go_generated_source_files.bzl", "write_go_generated_source_files")
+ 
+ proto_library(
+     name = "command_line_proto",
+@@ -18,15 +17,6 @@ go_proto_library(
+     deps = ["//bazel/options"],
+ )
+ 
+-write_go_generated_source_files(
+-    name = "write_pb_go",
+-    src = ":command_line_go_proto",
+-    output_files = [
+-        "command_line.pb.go",
+-    ],
+-    visibility = ["//bazel:__pkg__"],
+-)
+-
+ go_library(
+     name = "command_line",
+     embed = [":command_line_go_proto"],
+diff --git a/bazel/failure_details/BUILD.bazel b/bazel/failure_details/BUILD.bazel
+index 9026760..ed7d402 100644
+--- a/bazel/failure_details/BUILD.bazel
++++ b/bazel/failure_details/BUILD.bazel
+@@ -1,7 +1,6 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("//bazel/go:write_go_generated_source_files.bzl", "write_go_generated_source_files")
+ 
+ proto_library(
+     name = "failure_details_proto",
+@@ -17,15 +16,6 @@ go_proto_library(
+     visibility = ["//visibility:public"],
+ )
+ 
+-write_go_generated_source_files(
+-    name = "write_pb_go",
+-    src = ":failure_details_go_proto",
+-    output_files = [
+-        "failure_details.pb.go",
+-    ],
+-    visibility = ["//bazel:__pkg__"],
+-)
+-
+ go_library(
+     name = "failure_details",
+     embed = [":failure_details_go_proto"],
+diff --git a/bazel/flags/BUILD.bazel b/bazel/flags/BUILD.bazel
+index 0ad0373..609cba2 100644
+--- a/bazel/flags/BUILD.bazel
++++ b/bazel/flags/BUILD.bazel
+@@ -1,7 +1,6 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("//bazel/go:write_go_generated_source_files.bzl", "write_go_generated_source_files")
+ 
+ proto_library(
+     name = "bazel_proto",
+@@ -16,15 +15,6 @@ go_proto_library(
+     visibility = ["//visibility:public"],
+ )
+ 
+-write_go_generated_source_files(
+-    name = "write_pb_go",
+-    src = ":bazel_go_proto",
+-    output_files = [
+-        "flags.pb.go",
+-    ],
+-    visibility = ["//bazel:__pkg__"],
+-)
+-
+ go_library(
+     name = "flags",
+     embed = [":bazel_go_proto"],
+diff --git a/bazel/invocation_policy/BUILD.bazel b/bazel/invocation_policy/BUILD.bazel
+index 2df2d77..f57e8f4 100644
+--- a/bazel/invocation_policy/BUILD.bazel
++++ b/bazel/invocation_policy/BUILD.bazel
+@@ -1,7 +1,6 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("//bazel/go:write_go_generated_source_files.bzl", "write_go_generated_source_files")
+ 
+ proto_library(
+     name = "invocation_policy_proto",
+@@ -16,15 +15,6 @@ go_proto_library(
+     visibility = ["//visibility:public"],
+ )
+ 
+-write_go_generated_source_files(
+-    name = "write_pb_go",
+-    src = ":blaze_invocation_policy_go_proto",
+-    output_files = [
+-        "invocation_policy.pb.go",
+-    ],
+-    visibility = ["//bazel:__pkg__"],
+-)
+-
+ go_library(
+     name = "invocation_policy",
+     embed = [":blaze_invocation_policy_go_proto"],
+diff --git a/bazel/options/BUILD.bazel b/bazel/options/BUILD.bazel
+index 8794add..f720706 100644
+--- a/bazel/options/BUILD.bazel
++++ b/bazel/options/BUILD.bazel
+@@ -1,7 +1,6 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("//bazel/go:write_go_generated_source_files.bzl", "write_go_generated_source_files")
+ 
+ proto_library(
+     name = "options_proto",
+@@ -16,15 +15,6 @@ go_proto_library(
+     visibility = ["//visibility:public"],
+ )
+ 
+-write_go_generated_source_files(
+-    name = "write_pb_go",
+-    src = ":options_go_proto",
+-    output_files = [
+-        "option_filters.pb.go",
+-    ],
+-    visibility = ["//bazel:__pkg__"],
+-)
+-
+ go_library(
+     name = "options",
+     embed = [":options_go_proto"],
+diff --git a/bazel/packages_metrics/BUILD.bazel b/bazel/packages_metrics/BUILD.bazel
+index 3388139..7728db7 100644
+--- a/bazel/packages_metrics/BUILD.bazel
++++ b/bazel/packages_metrics/BUILD.bazel
+@@ -1,7 +1,6 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("//bazel/go:write_go_generated_source_files.bzl", "write_go_generated_source_files")
+ 
+ proto_library(
+     name = "devtools_build_lib_packages_metrics_proto",
+@@ -17,15 +16,6 @@ go_proto_library(
+     visibility = ["//visibility:public"],
+ )
+ 
+-write_go_generated_source_files(
+-    name = "write_pb_go",
+-    src = ":devtools_build_lib_packages_metrics_go_proto",
+-    output_files = [
+-        "package_load_metrics.pb.go",
+-    ],
+-    visibility = ["//bazel:__pkg__"],
+-)
+-
+ go_library(
+     name = "packages_metrics",
+     embed = [":devtools_build_lib_packages_metrics_go_proto"],
+diff --git a/bazel/query/BUILD.bazel b/bazel/query/BUILD.bazel
+index c273ba0..9197acc 100644
+--- a/bazel/query/BUILD.bazel
++++ b/bazel/query/BUILD.bazel
+@@ -1,7 +1,6 @@
+ load("@io_bazel_rules_go//go:def.bzl", "go_library")
+ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+ load("@rules_proto//proto:defs.bzl", "proto_library")
+-load("//bazel/go:write_go_generated_source_files.bzl", "write_go_generated_source_files")
+ 
+ proto_library(
+     name = "blaze_query_aspect_mirror_proto",
+@@ -16,15 +15,6 @@ go_proto_library(
+     visibility = ["//visibility:public"],
+ )
+ 
+-write_go_generated_source_files(
+-    name = "write_pb_go",
+-    src = ":blaze_query_aspect_mirror_go_proto",
+-    output_files = [
+-        "build.pb.go",
+-    ],
+-    visibility = ["//bazel:__pkg__"],
+-)
+-
+ go_library(
+     name = "query",
+     embed = [":blaze_query_aspect_mirror_go_proto"],

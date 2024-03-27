@@ -82,9 +82,22 @@ go_sdk.download(
 use_repo(go_sdk, "go_sdk")
 
 go_deps.from_file(go_mod = "//:go.mod")
-go_deps.gazelle_override(
-    build_file_generation = "on",
+# Workaround https://github.com/bazelbuild/bazel/issues/19301
+# Aspect CLI BUILD files load transitively from aspect_bazel_lib,
+# but rules_go can't make that visible from the external repo it generates.
+# So we must remove those load statements in a patch.
+go_deps.module_override(
+    patch_strip = 1,
+    patches = ["//patches:aspect-cli.patch"],
     path = "aspect.build/cli",
+)
+go_deps.gazelle_override(
+    path = "github.com/bazelbuild/bazelisk",
+    build_file_generation = "on",
+)
+go_deps.gazelle_override(
+    path = "github.com/hashicorp/go-plugin",
+    directives = ["gazelle:proto disable_global"],
 )
 use_repo(go_deps, "org_golang_google_grpc", "org_golang_google_protobuf", "com_github_hashicorp_go_plugin", "build_aspect_cli", "com_github_manifoldco_promptui")
 
