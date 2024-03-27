@@ -82,6 +82,10 @@ go_sdk.download(
 use_repo(go_sdk, "go_sdk")
 
 go_deps.from_file(go_mod = "//:go.mod")
+go_deps.gazelle_override(
+    build_file_generation = "on",
+    path = "aspect.build/cli",
+)
 use_repo(go_deps, "org_golang_google_grpc", "org_golang_google_protobuf", "com_github_hashicorp_go_plugin", "build_aspect_cli", "com_github_manifoldco_promptui")
 
 non_module_deps = use_extension("@rules_swift//swift:extensions.bzl", "non_module_deps")
