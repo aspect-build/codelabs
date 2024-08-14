@@ -4,7 +4,7 @@ configure:
     go: true
     protobuf: true
   plugins:
-    - .aspect/cli/cc_library.star
+    - .aspect/cli/rules_cc.star
 plugins:
     - name: fix-visibility
       from: github.com/aspect-build/plugin-fix-visibility

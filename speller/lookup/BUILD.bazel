@@ -1,7 +1,8 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 
-cc_library(
+cc_test(
     name = "lookup-test_lib",
+    size = "small",
     srcs = ["lookup-test.cc"],
     deps = [":lookup_lib"],
 )
@@ -9,5 +10,7 @@ cc_library(
 cc_library(
     name = "lookup_lib",
     srcs = ["lookup.cc"],
+    hdrs = ["lookup.h"],
+    visibility = ["//:__subpackages__"],
     deps = ["@sqlite3"],
 )
