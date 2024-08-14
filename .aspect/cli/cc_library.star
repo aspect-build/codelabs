@@ -4,36 +4,29 @@ aspect.register_rule_kind("cc_library", {
     "ResolveAttrs": ["deps"],
 })
 
-def prepare(_):
-    return aspect.PrepareResult(
-        sources = [
-            aspect.SourceExtensions(".cc"),
-        ],
-        queries = {
-            # TODO: use treesitter C++ once it's built into Aspect CLI
-            "imports": aspect.RegexQuery(
-                filter = "*.cc",
-                expression = """#include\\s+"(?P<import>[^.]+).h\""""
-                # import\\s+"(?P<import>[^"]+)\",
-            ),
-        },
-    )
-
 def declare(ctx):
     for file in ctx.sources:
+        deps = []
+        for imp in file.query_results["imports"]:
+            id = imp.captures["import"]
+            if id == "gtest/gtest":
+                deps.append("@googletest//:gtest_main")
+            elif id == "sqlite3":
+                deps.append("@sqlite3")
+            else:
+                deps.append(aspect.Import(
+                    id = id,
+                    provider = "cc",
+                    src = file.path,
+                ))
         ctx.targets.add(
             name = file.path[:file.path.rindex(".")] + "_lib",
             kind = "cc_library",
             attrs = {
                 "srcs": [file.path],
-                "deps": [
-                    aspect.Import(
-                        id = i.captures["import"],
-                        provider = "cc",
-                        src = file.path,
-                    )
-                    for i in file.query_results["imports"]
-                ],
+                # FIXME:
+                # "hdrs": [file.path.replace(".cc", ".h")],
+                "deps": deps,
             },
             symbols = [aspect.Symbol(
                 id = "/".join([ctx.rel, file.path.removesuffix(".cc")]) if ctx.rel else file.path.removesuffix(".cc"),
@@ -42,7 +35,16 @@ def declare(ctx):
         )
 
 aspect.register_configure_extension(
-    id = "cpp-regex",
-    prepare = prepare,
+    id = "cpp",
+    prepare = lambda _: aspect.PrepareResult(
+        sources = [aspect.SourceExtensions(".cc")],
+        queries = {
+            # TODO: use treesitter C++ once it's built into Aspect CLI
+            "imports": aspect.RegexQuery(
+                filter = "*.cc",
+                expression = """#include\\s+"(?P<import>[^.]+).h\""""
+            ),
+        },
+    ),
     declare = declare,
 )

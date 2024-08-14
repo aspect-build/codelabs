@@ -5,3 +5,7 @@ configure:
     protobuf: true
   plugins:
     - .aspect/cli/cc_library.star
+plugins:
+    - name: fix-visibility
+      from: github.com/aspect-build/plugin-fix-visibility
+      version: v0.1.0
