@@ -1,7 +1,11 @@
 # Test output information
 test --test_output=errors --test_summary=detailed
 
-common --enable_bzlmod
+# Don't report when the root module's lower bound for a dependency happens to be less than the resolved version.
+# This is expected and should NOT prompt an engineer to update our lower bound to match.
+# WARNING: For repository 'aspect_bazel_lib', the root module requires module version aspect_bazel_lib@1.30.2,
+# but got aspect_bazel_lib@1.31.2 in the resolved dependency graph.
+common --check_direct_dependencies=off
 
 # passes an argument `--skipLibCheck` to *every* spawn of tsc
 common --@aspect_rules_ts//ts:skipLibCheck=always
