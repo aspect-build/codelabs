@@ -28,6 +28,7 @@ ts_proto_library(
     name = "logger_proto_ts",
     node_modules = "//schema:node_modules",
     proto = ":logger_proto",
+    files_to_copy = ["logger_connect.d.ts", "logger_pb.d.ts"],
 )
 
 java_proto_library(
