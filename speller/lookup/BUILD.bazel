@@ -1,0 +1,16 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "lookup-test_lib",
+    srcs = ["lookup-test.cc"],
+    deps = [
+        ":lookup_lib",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_library(
+    name = "lookup_lib",
+    srcs = ["lookup.cc"],
+    hdrs = ["lookup.h"],
+)
