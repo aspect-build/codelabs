@@ -5,8 +5,8 @@ cc_test(
     size = "small",
     srcs = ["lookup-test.cc"],
     deps = [
-        "@googletest//:gtest",
         ":lookup_lib",
+        "@googletest//:gtest_main",
     ],
 )
 
