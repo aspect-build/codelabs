@@ -4,7 +4,10 @@ cc_test(
     name = "lookup-test_lib",
     size = "small",
     srcs = ["lookup-test.cc"],
-    deps = [":lookup_lib"],
+    deps = [
+        "@googletest//:gtest",
+        ":lookup_lib",
+    ],
 )
 
 cc_library(
