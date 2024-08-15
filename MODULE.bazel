@@ -7,6 +7,7 @@ bazel_dep(name = "aspect_rules_swc", version = "2.0.0-rc1")
 bazel_dep(name = "aspect_rules_ts", version = "3.0.0-rc2")
 bazel_dep(name = "bazel_skylib", version = "1.4.2")
 bazel_dep(name = "gazelle", version = "0.32.0")
+bazel_dep(name = "googletest", version = "1.15.2")
 bazel_dep(name = "rules_apple", version = "3.0.0")
 bazel_dep(name = "rules_go", version = "0.48.0")
 bazel_dep(name = "rules_java", version = "7.4.0")
@@ -16,7 +17,14 @@ bazel_dep(name = "rules_python", version = "0.27.1")
 bazel_dep(name = "rules_swift", version = "1.12.0")
 bazel_dep(name = "rules_swift_package_manager", version = "0.12.0")
 bazel_dep(name = "rules_xcodeproj", version = "1.11.0")
+bazel_dep(name = "sqlite3", version = "3.42.0.bcr.1")
+bazel_dep(name = "toolchains_llvm", version = "1.1.2")
 bazel_dep(name = "toolchains_protoc", version = "0.3.1")
+
+llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
+llvm.toolchain(llvm_version = "15.0.6")
+
+use_repo(llvm, "llvm_toolchain")
 
 # Demonstrate that you can copy "arbitrary fetches" like http_archive from the WORKSPACE file
 http_jar = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_jar")
@@ -37,6 +45,7 @@ protoc.toolchain(
 )
 use_repo(protoc, "com_google_protobuf", "toolchains_protoc_hub")
 
+register_toolchains("@llvm_toolchain//:all")
 register_toolchains("@toolchains_protoc_hub//:all")
 register_toolchains("//tools/toolchains:all")
 

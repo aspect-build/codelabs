@@ -1,0 +1,8 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "build-dictionary_lib",
+    srcs = ["build-dictionary.cc"],
+    visibility = ["//:__subpackages__"],
+    deps = ["//speller/lookup:lookup_lib"],
+)
