@@ -33,9 +33,7 @@ def add_target(ctx, file, hdrs = []):
                 src = file.path,
             ))
     is_test = basename.endswith("-test") or basename.endswith(".test")
-    # TODO: query for whether there's a function named main with the expected signatune
-    is_main = False
-    print("deps", deps)
+    is_main = len(file.query_results["has_main"]) > 0
     attrs = {
         "srcs": [file.path],
         "hdrs": [h.path for h in hdrs],
@@ -90,6 +88,10 @@ aspect.register_configure_extension(
             "imports": aspect.RegexQuery(
                 filter = "*.cc",
                 expression = """#include\\s+"(?P<import>[^.]+).h\"""",
+            ),
+            "has_main": aspect.RegexQuery(
+                filter = "*.cc",
+                expression = "int\\s+main\\(",
             ),
         },
     ),
