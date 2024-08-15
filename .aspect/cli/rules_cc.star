@@ -33,6 +33,9 @@ def add_target(ctx, file, hdrs = []):
                 src = file.path,
             ))
     is_test = basename.endswith("-test") or basename.endswith(".test")
+    # TODO: query for whether there's a function named main with the expected signatune
+    is_main = False
+    print("deps", deps)
     attrs = {
         "srcs": [file.path],
         "hdrs": [h.path for h in hdrs],
@@ -40,13 +43,12 @@ def add_target(ctx, file, hdrs = []):
     }
     if is_test:
         attrs["size"] = "small"
-    else:
+    elif not is_main:
         attrs["visibility"] = ["//:__subpackages__"]
 
     ctx.targets.add(
         name = file.path[:file.path.rindex(".")] + "_lib",
-        # FIXME: sometimes it should be cc_binary
-        kind = "cc_test" if is_test else "cc_library",
+        kind = "cc_test" if is_test else "cc_binary" if is_main else "cc_library",
         attrs = attrs,
         symbols = [aspect.Symbol(
             id = "/".join([ctx.rel, basename]) if ctx.rel else basename,
@@ -87,7 +89,7 @@ aspect.register_configure_extension(
             # TODO: use treesitter C++ once it's built into Aspect CLI
             "imports": aspect.RegexQuery(
                 filter = "*.cc",
-                expression = """#include\\s+"(?P<import>[^.]+).h\""""
+                expression = """#include\\s+"(?P<import>[^.]+).h\"""",
             ),
         },
     ),
