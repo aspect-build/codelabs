@@ -1,6 +1,8 @@
-# Bazel Codelab
+> [!IMPORTANT]  
+> To create a minimal "playground" for learning Bazel, run [`aspect init`](https://docs.aspect.build/cli/commands/aspect_init).
+> To see a full example Bazel monorepo check out <https://github.com/aspect-build/bazel-examples>.
 
-This codelab is part of the Bazel Training course from [Aspect.dev](https://aspect.dev).
+# OBSOLETE, Archived: Bazel training course
 
 You can self-study by following our [Tutorial](https://docs.aspect.build/tutorial).
 However, we recommend signing up for an instructor-led class at <https://aspect.dev/services#training>.
